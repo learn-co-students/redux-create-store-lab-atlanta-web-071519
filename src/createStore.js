@@ -1,22 +1,21 @@
 import countReducer from './reducers/countReducer'; 
 import candyReducer from './reducers/candyReducer'; 
+import { render } from 'react-dom';
 
-export default function createStore(countReducer) {
+const createStore = (countReducer) => {
   // add your code here
-  let state = 0;
- 
-  function dispatch(action) {
-    state = countReducer(state, action);
+  let state; 
+  const getState = () => {
+    return countReducer(state, {type: 'default'})
   }
- 
-  function getState() {
-    return state;
-  };
- 
-  return {
-    dispatch,
-    getState
-  };
+
+  const dispatch = (action) => {
+    countReducer(state, action);
+    render();  
+  }
+
+  return {dispatch, getState}; 
 }
 
+export default createStore; 
 
